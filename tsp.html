@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta name="description" content="The correct optimal road trip across the U.S.">
+<meta name="author" content="Randal S. Olson; modified by Jean-Francois Puget">
+<title>The correct optimal road trip across the U.S.</title>
+<style>
+html, body, #map-canvas {
+height: 100%;
+margin: 0px;
+padding: 0px
+}
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script>
+
+var directionsDisplay1;
+
+var directionsDisplay2;
+
+var directionsDisplay3;
+
+var directionsDisplay4;
+
+var directionsDisplay5;
+
+var directionsDisplay6;
+
+var markerOptions = {icon: "http://maps.gstatic.com/mapfiles/markers2/marker.png"};
+var directionsDisplayOptions = {preserveViewport: true,
+markerOptions: markerOptions};
+var directionsService = new google.maps.DirectionsService();
+var map;
+function initialize() {
+var center = new google.maps.LatLng(39, -96);
+var mapOptions = {
+zoom: 5,
+center: center
+};
+map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+directionsDisplay1.setMap(map);
+
+directionsDisplay2.setMap(map);
+
+directionsDisplay3.setMap(map);
+
+directionsDisplay4.setMap(map);
+
+directionsDisplay5.setMap(map);
+
+directionsDisplay6.setMap(map);
+
+}
+function calcRoute(start, end, routes) {
+switch (start) {
+
+case "USS Alabama, Battleship Parkway, Mobile, AL":
+directionsDisplay1 = new google.maps.DirectionsRenderer(directionsDisplayOptions);
+break;
+
+case "Yellowstone National Park, WY 82190":
+directionsDisplay2 = new google.maps.DirectionsRenderer(directionsDisplayOptions);
+break;
+
+case "Glacier National Park, West Glacier, MT":
+directionsDisplay3 = new google.maps.DirectionsRenderer(directionsDisplayOptions);
+break;
+
+case "Gateway Arch, Washington Avenue, St Louis, MO":
+directionsDisplay4 = new google.maps.DirectionsRenderer(directionsDisplayOptions);
+break;
+
+case "The Breakers, Ochre Point Avenue, Newport, RI":
+directionsDisplay5 = new google.maps.DirectionsRenderer(directionsDisplayOptions);
+break;
+
+case "Wright Brothers National Memorial Visitor Center, Manteo, NC":
+directionsDisplay6 = new google.maps.DirectionsRenderer(directionsDisplayOptions);
+break;
+
+}
+var waypts = [];
+for (var i = 0; i < routes.length; i++) {
+waypts.push({
+location:routes[i],
+stopover:true});
+}
+var request = {
+origin: start,
+destination: end,
+waypoints: waypts,
+optimizeWaypoints: false,
+travelMode: google.maps.TravelMode.DRIVING
+};
+directionsService.route(request, function(response, status) {
+if (status == google.maps.DirectionsStatus.OK) {
+switch (start) {
+
+case "USS Alabama, Battleship Parkway, Mobile, AL":
+directionsDisplay1.setDirections(response);
+break;
+
+case "Yellowstone National Park, WY 82190":
+directionsDisplay2.setDirections(response);
+break;
+
+case "Glacier National Park, West Glacier, MT":
+directionsDisplay3.setDirections(response);
+break;
+
+case "Gateway Arch, Washington Avenue, St Louis, MO":
+directionsDisplay4.setDirections(response);
+break;
+
+case "The Breakers, Ochre Point Avenue, Newport, RI":
+directionsDisplay5.setDirections(response);
+break;
+
+case "Wright Brothers National Memorial Visitor Center, Manteo, NC":
+directionsDisplay6.setDirections(response);
+break;
+
+}
+}
+});
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+
+calcRoute("USS Alabama, Battleship Parkway, Mobile, AL","Yellowstone National Park, WY 82190",['French Quarter, New Orleans, LA', 'Vicksburg National Military Park, Clay Street, Vicksburg, MS', 'Graceland, Elvis Presley Boulevard, Memphis, TN', 'Toltec Mounds, Scott, AR', 'Chickasaw National Recreation Area, 1008 W 2nd St, Sulphur, OK 73086', 'The Alamo, Alamo Plaza, San Antonio, TX', 'Carlsbad Caverns National Park, Carlsbad, NM', 'Pikes Peak, Colorado']);
+
+calcRoute("Yellowstone National Park, WY 82190","Glacier National Park, West Glacier, MT",['Craters of the Moon National Monument & Preserve, Arco, ID', 'Bryce Canyon National Park, Hwy 63, Bryce, UT', 'Grand Canyon National Park, Arizona', 'Hoover Dam, NV', 'San Andreas Fault, San Benito County, CA', 'Cable Car Museum, 94108, 1201 Mason St, San Francisco, CA 94108', 'Columbia River Gorge National Scenic Area, Oregon', 'Hanford Site, Benton County, WA']);
+
+calcRoute("Glacier National Park, West Glacier, MT","Gateway Arch, Washington Avenue, St Louis, MO",['Fort Union Trading Post National Historic Site, Williston, North Dakota 1804, ND', 'Mount Rushmore National Memorial, South Dakota 244, Keystone, SD', 'Ashfall Fossil Bed, Royal, NE', 'C. W. Parker Carousel Museum, South Esplanade Street, Leavenworth, KS', 'Terrace Hill, Grand Avenue, Des Moines, IA', 'Fort Snelling, Tower Avenue, Saint Paul, MN', 'Taliesin, County Road C, Spring Green, Wisconsin', 'Lincoln Home National Historic Site Visitor Center, 426 South 7th Street, Springfield, IL']);
+
+calcRoute("Gateway Arch, Washington Avenue, St Louis, MO","The Breakers, Ochre Point Avenue, Newport, RI",['West Baden Springs Hotel, West Baden Avenue, West Baden Springs, IN', 'Mammoth Cave National Park, Mammoth Cave Pkwy, Mammoth Cave, KY', 'Spring Grove Cemetery, Spring Grove Avenue, Cincinnati, OH', 'Olympia Entertainment, Woodward Avenue, Detroit, MI', 'Shelburne Farms, Harbor Road, Shelburne, VT', 'Omni Mount Washington Resort, Mount Washington Hotel Road, Bretton Woods, NH', 'Acadia National Park, Maine', 'USS Constitution, Boston, MA']);
+
+calcRoute("The Breakers, Ochre Point Avenue, Newport, RI","Wright Brothers National Memorial Visitor Center, Manteo, NC",['The Mark Twain House & Museum, Farmington Avenue, Hartford, CT', 'Statue of Liberty, Liberty Island, NYC, NY', 'Liberty Bell, 6th Street, Philadelphia, PA', 'Congress Hall, Congress Place, Cape May, NJ 08204', 'New Castle Historic District, Delaware', 'Maryland State House, 100 State Cir, Annapolis, MD 21401', 'White House, Pennsylvania Avenue Northwest, Washington, DC', 'Mount Vernon, Fairfax County, Virginia']);
+
+calcRoute("Wright Brothers National Memorial Visitor Center, Manteo, NC","USS Alabama, Battleship Parkway, Mobile, AL",['Lost World Caverns, Lewisburg, WV', "Fort Sumter National Monument, Sullivan's Island, SC", 'Okefenokee Swamp Park, Okefenokee Swamp Park Road, Waycross, GA', 'Cape Canaveral, FL']);
+
+</script>
+</head>
+<body>
+<div id="map-canvas"></div>
+</body>
+</html>
